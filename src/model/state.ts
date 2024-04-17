@@ -1,0 +1,8 @@
+enum State {
+  WHITE_WON = "WHITE_WON",
+  BLACK_WON = "BLACK_WON",
+  IN_PROGRESS = "IN_PROGRESS",
+  STALEMATE = "STALEMATE"
+}
+
+export { State }
