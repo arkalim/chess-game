@@ -53,7 +53,7 @@ class Controller {
     return startTile.piece!.canMove(startTile, endTile);
   }
 
-  checkmate() {
+  stalemate() {
     const opponentTiles = this.game.board.getTilesByPieceColor(
       this.opponentColor
     );
@@ -64,13 +64,15 @@ class Controller {
       for (const tile of this.game.board.getAllTiles()) {
         // if the opponent's piece can move to the tile
         if (opponentTile !== tile && this.pieceCanMove(opponentTile, tile)) {
-          // check if the move saves the opponent's king
+          // if the king is safe after the move, it's not a stalemate
           if (!this.moveKillsOpponentKing(opponentTile, tile)) {
             return false;
           }
         }
       }
     }
+
+    // if every valid move kills the king, it's a stalemate
     return true;
   }
 
@@ -176,18 +178,27 @@ class Controller {
       // make the move
       this.movePiece(startTile!, endTile!);
 
-      // check if opponent's king is getting killed after the move
-      if (this.opponentCheck()) {
-        // check if the opponent got a checkmate
-        if (this.checkmate()) {
+      // check if the move resulted in stalemate and check for the opponent
+      const stalemate = this.stalemate();
+      const opponentCheck = this.opponentCheck();
+
+      // if the move resulted in stalemate
+      if (stalemate) {
+        // if the move resulted in both stalemate and check for the opponent, it's a checkmate
+        if (opponentCheck) {
           this.game.state =
             this.currentColor === Color.WHITE
               ? State.WHITE_WON
               : State.BLACK_WON;
-          return true;
+          // otherwise, it is just a stalemate
+        } else {
+          this.game.state = State.STALEMATE;
         }
+        return true;
+      }
 
-        // if not a checkmate, then it's just a check
+      // not a stalemate, just opponent check
+      if (opponentCheck) {
         this.check = true;
       }
 

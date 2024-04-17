@@ -43,7 +43,7 @@ class Chess {
         );
         break;
       case State.STALEMATE:
-        console.log(`It's a draw!`, "color: yellow; font-weight: bold");
+        console.log(`%cIt's a draw!`, "color: yellow; font-weight: bold");
         break;
       default:
         console.log("Game's not over yet!");
