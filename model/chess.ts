@@ -1,11 +1,9 @@
-import { Board } from "./board";
-import { Move } from "./move";
-import { Position } from "./position";
-import { State } from "./state";
-import { Player } from "./player";
-import { Controller } from "./controller";
-
-import * as readline from "readline";
+import { Board } from "./board.ts";
+import { Move } from "./move.ts";
+import { Position } from "./position.ts";
+import { State } from "./state.ts";
+import { Player } from "./player.ts";
+import { Controller } from "./controller.ts";
 
 class Chess {
   board: Board;
@@ -16,11 +14,6 @@ class Chess {
   blackPlayer: Player;
 
   controller: Controller;
-
-  readline = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout,
-  });
 
   constructor(whitePlayer: Player, blackPlayer: Player) {
     this.state = State.IN_PROGRESS;
@@ -45,6 +38,7 @@ class Chess {
         break;
       case State.STALEMATE:
         console.log(`It's a draw!`);
+        break;
       default:
         console.log("Game's not over yet!");
     }
@@ -62,26 +56,22 @@ class Chess {
       return;
     }
     this.show();
-    this.readline.question(
-      `${this.controller.currentPlayer.name}'s move: `,
-      (move) => {
-        try {
-          const [start, end] = move.split("-");
-          this.move(
-            this.controller.currentPlayer,
-            new Position(start),
-            new Position(end)
-          );
-          this.play();
-        } catch (error) {
-          console.error(`Exception occurred: ${error}`);
-          this.play();
-        }
-      }
-    );
+    const move = prompt(`${this.controller.currentPlayer.name}'s move: `);
+    try {
+      const [start, end] = move!.split("-");
+      this.move(
+        this.controller.currentPlayer,
+        new Position(start),
+        new Position(end)
+      );
+      this.play();
+    } catch (error) {
+      console.error(`Exception occurred: ${error}`);
+      this.play();
+    }
   }
 
-  replay(moves: string[]) {
+  replay(moves: string[], play = true) {
     for (const move of moves) {
       const [start, end] = move.split("-");
       this.move(
@@ -91,7 +81,9 @@ class Chess {
       );
     }
 
-    this.play();
+    if (play) {
+      this.play();
+    }
   }
 }
 

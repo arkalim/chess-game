@@ -1,5 +1,5 @@
-import { Tile } from "../tile"
-import { Piece } from "./piece"
+import { Tile } from "../tile.ts"
+import { Piece } from "./piece.ts"
 
 class Knight extends Piece {
   shortHand = "N"

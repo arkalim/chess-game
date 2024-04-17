@@ -1,0 +1,8 @@
+{
+  "tasks": {
+    "play": "deno run main.ts"
+  },
+  "test": {
+    "include": ["./tests"]
+  }
+}

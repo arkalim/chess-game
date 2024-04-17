@@ -1,10 +1,10 @@
 class Position {
-  position: string
-  row: number
-  column: number
+  position: string;
+  row: number;
+  column: number;
 
   constructor(position: string) {
-    this.position = position
+    this.position = position;
     const encodedPosition = this.encodePosition(position);
     if (encodedPosition !== undefined) {
       [this.row, this.column] = encodedPosition;
@@ -14,7 +14,7 @@ class Position {
   }
 
   encodePosition(position: string): [number, number] | undefined {
-    const file = position[0].charCodeAt(0) - 'a'.charCodeAt(0);
+    const file = position[0].charCodeAt(0) - "a".charCodeAt(0);
     const rank = parseInt(position[1]) - 1;
 
     // Check if the position is valid (within the chessboard)
@@ -26,4 +26,4 @@ class Position {
   }
 }
 
-export { Position }
+export { Position };
