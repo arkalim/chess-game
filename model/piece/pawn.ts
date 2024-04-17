@@ -1,6 +1,7 @@
 import { Color } from "../color.ts";
 import { Tile } from "../tile.ts";
 import { Piece } from "./piece.ts";
+import { Queen } from "./queen.ts";
 
 class Pawn extends Piece {
   shortHand = "P";
@@ -69,6 +70,17 @@ class Pawn extends Piece {
         }
     }
     return false;
+  }
+
+  promote(tile: Tile) {
+    if (tile.piece === this) {
+      if (
+        (this.color === Color.WHITE && tile.row === 7) ||
+        (this.color === Color.BLACK && tile.row === 0)
+      ) {
+        tile.piece = new Queen(this.color, this.game);
+      }
+    }
   }
 }
 

@@ -1,5 +1,6 @@
 import { Chess } from "./chess.ts";
 import { Color } from "./color.ts";
+import { Pawn } from "./piece/index.ts";
 import { Player } from "./player.ts";
 import { Position } from "./position.ts";
 import { State } from "./state.ts";
@@ -178,11 +179,16 @@ class Controller {
       // make the move
       this.movePiece(startTile!, endTile!);
 
+      // if a pawn was moved, promote it if needed
+      if (endTile?.piece instanceof Pawn) {
+        (endTile?.piece as Pawn).promote(endTile);
+      }
+
       // check if the move resulted in stalemate and check for the opponent
       const stalemate = this.stalemate();
       const opponentCheck = this.opponentCheck();
 
-      // if the move resulted in stalemate
+      // if the move resulted in stale
       if (stalemate) {
         // if the move resulted in both stalemate and check for the opponent, it's a checkmate
         if (opponentCheck) {
