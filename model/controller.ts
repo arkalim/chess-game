@@ -180,7 +180,6 @@ class Controller {
       if (this.opponentCheck()) {
         // check if the opponent got a checkmate
         if (this.checkmate()) {
-          console.log("Checkmate!!!");
           this.game.state =
             this.currentColor === Color.WHITE
               ? State.WHITE_WON
@@ -190,7 +189,6 @@ class Controller {
 
         // if not a checkmate, then it's just a check
         this.check = true;
-        console.log(">>> Check!!!");
       }
 
       // update current player

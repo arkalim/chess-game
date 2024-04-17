@@ -20,7 +20,7 @@ Deno.test("king-king", () => {
       "f7-f6",
       "e2-e3",
       "f6-f5",
-      "e3-e4",
+      "e3-e4", // invalid move
     ],
     false
   );
